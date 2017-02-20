@@ -24,6 +24,7 @@ void tev::jet(const Eigen::VectorXd & Field, const double min, const double max,
 		C(i, 1) = g;
 		C(i, 2) = b;
 	}
+
 }
 
 void tev::jet(const double x_in, double & r, double & g, double & b)
