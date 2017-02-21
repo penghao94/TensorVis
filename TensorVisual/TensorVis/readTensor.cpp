@@ -15,7 +15,6 @@ void tev::readTensor(const std::string Tensor_file_name, std::vector<std::vector
 		int tenrow, tencol;
 		int tenindex = 0;
 		fscanf(tensor_file, "%d %d\n", &tenrow, &tencol);
-		printf("%d %d\n", tenrow, tencol);
 		T.resize(tenrow);
 		while (tenindex < tenrow) {
 

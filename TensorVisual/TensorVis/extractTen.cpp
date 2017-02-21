@@ -3,7 +3,7 @@
 /*
 this function is used to extract tensor information from OOFEM outfile
 */
-void tev::extractTen(std::string file,std::string outfile)
+void tev::extractTen(std::string outfile,std::string file)
 {
 	int start, end;
 	int line = 0;
@@ -13,9 +13,9 @@ void tev::extractTen(std::string file,std::string outfile)
 	double *mean = new double[6];
 	char file_str[1024];
 
-	std::string file_o = file + ".out";
-	std::string file_t = outfile + ".ten";
-	std::string file_s = outfile + ".sca";
+	std::string file_o = outfile + ".out";
+	std::string file_t = file + "g.ten";
+	std::string file_s = file + "g.sca";
 	const char* out_o = file_o.c_str();
 	const char* ten_n = file_t.c_str();
 	const char* sca_n = file_s.c_str();

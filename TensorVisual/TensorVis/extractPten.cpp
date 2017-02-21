@@ -11,8 +11,8 @@ void tev::extractPten(std::string file)
 	int** enode;
 	std::string file_n = file + "_e.node";
 	std::string file_e = file + "_e.ele";
-	std::string file_t = file + ".ten";
-	std::string file_s = file + ".sca";
+	std::string file_t = file + "g.ten";
+	std::string file_s = file + "g.sca";
 	std::string file_pt = file + "g.pten";
 	std::string file_ps = file + "g.psca";
 	const char* node_o = file_n.c_str();

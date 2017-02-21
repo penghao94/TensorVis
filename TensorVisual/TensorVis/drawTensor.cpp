@@ -13,7 +13,7 @@ bool tev::drawTensor(igl::viewer::Viewer & viewer,
 	Eigen::MatrixXd & T,
 	bool isAccuracy)
 {
-	cout << "-------Tensor Information------" << endl;
+	cout << "-------Tensor Information-------" << endl;
 	cout << " Axis is:      " << axis << endl;
 	cout << " Layer is:     " << layer << endl;
 	cout << " Accuracy is:  " << accuracy << endl;
@@ -23,6 +23,7 @@ bool tev::drawTensor(igl::viewer::Viewer & viewer,
 	else
 		cout << " Is Accuracy:  NO" << endl;
 	cout << "--------------------------------" << endl;
+	cout << endl;
 	viewer.core.show_lines = false;
 	Eigen::MatrixXd  Vn;
 	Eigen::MatrixXi  Fn;
@@ -50,7 +51,8 @@ bool tev::drawTensor(igl::viewer::Viewer & viewer,
 	else {
 		tev::slice(AXIS, 1, layer, V, T, temp_V, temp_T);
 
-		cout << radom << endl;
+		_V.resize(radom, 3);
+		_T.resize(radom, 6);
 		if (temp_V.rows() > radom ){
 			for (int i = 0; i < radom; i++) {
 				int num = rand() % temp_V.rows();

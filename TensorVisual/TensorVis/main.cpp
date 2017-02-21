@@ -2,12 +2,14 @@
 #include <igl/file_dialog_save.h>
 #include <nanogui/formhelper.h>
 #include <nanogui/screen.h>
-
+#include <igl/png/readPNG.h>
 
 #include "loadMesh.h"
 #include "saveMesh.h"
 #include "jet_tensor.h"
 #include "drawTensor.h"
+#include "printPNG.h"
+#include "batch_ten.h"
 #include <iostream>
 using namespace std;
 //init the viewer
@@ -88,17 +90,23 @@ int main(int argc, char *argv[])
 		viewer.ngui->addGroup("Scalar Field");
 		viewer.ngui->addVariable<double>("Treshold", [&](double SCALAR_MAX)
 		{
-			tev::jet(S.col(0), SCALAR_MIN, SCALAR_MAX, C);//calculate scalar field color
-			viewer.data.set_colors(C);
+			if (V.rows() != 0) {
+				tev::jet(S.col(0), SCALAR_MIN, SCALAR_MAX, C);//calculate scalar field color
+				viewer.data.set_colors(C);
+			}
+				
 		}, [&]()
 		{
 			return SCALAR_MAX;
 		});
 
 		viewer.ngui->addButton("Reset Scalar", [&]() {
-			viewer.data.clear();
-			viewer.data.set_mesh(V,F);
-			viewer.data.set_colors(C);
+			if (V.rows() != 0) {
+				viewer.data.clear();
+				viewer.data.set_mesh(V, F);
+				viewer.data.set_colors(C);
+			}
+			
 		});
 		/*
 		Add a group of tensor field
@@ -108,7 +116,8 @@ int main(int argc, char *argv[])
 		viewer.ngui->addVariable<std::string>("Axis", [&](std::string axis)
 		{
 			AXIS = axis;
-			tev::drawTensor(viewer,AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
+			if (V.rows() != 0)
+				tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
 		}, [&]()
 		{
 			
@@ -118,7 +127,8 @@ int main(int argc, char *argv[])
 		viewer.ngui->addVariable<int>("Layer", [&](int layer)
 		{
 			LAYER = layer;
-			tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
+			if (V.rows() != 0)
+				tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
 		}, [&]()
 		{
 			return LAYER;
@@ -128,7 +138,8 @@ int main(int argc, char *argv[])
 		{
 			isAccuracy = true;
 			ACCURACY = accuracy;
-			tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
+			if (V.rows() != 0)
+				tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
 		}, [&]()
 		{
 			return ACCURACY;
@@ -138,14 +149,28 @@ int main(int argc, char *argv[])
 		{
 			isAccuracy = false;
 			RADOM=radom;
-			tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
+			if (V.rows() != 0)
+				tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
 		}, [&]()
 		{
 			return RADOM;
 		});
 
 		viewer.ngui->addButton("Reset Tensor", [&]() {
-			tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
+			if (V.rows() != 0)
+				tev::drawTensor(viewer, AXIS, ACCURACY, RADOM, LAYER, V, T, isAccuracy);
+		});
+
+		/*
+		Add a group of print and batch
+		*/
+		viewer.ngui->addGroup("Print and batch");
+
+		viewer.ngui->addButton("Print Png", [&]() {
+			tev::printPNG(viewer);
+		});
+		viewer.ngui->addButton("Batch Tensor ", [&]() {
+			tev::batch_ten();
 		});
 		// Generate menu
 		viewer.screen->performLayout();
