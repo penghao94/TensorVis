@@ -12,6 +12,7 @@ void tev::batch_ten(std::string file)
 	int identity;
 	char str[1024];
 	std::string out_filename;
+	std::cout << "-------Tensor file batch information-------"<<std::endl;
 	const char* batchfile = file.c_str();
 	FILE *batch = fopen(batchfile, "r");
 	if (batch == NULL) {
@@ -40,6 +41,8 @@ void tev::batch_ten(std::string file)
 		generateOFF(filename);
 		std::cout << std::endl;
 	}
+
+	std::cout << "-------------------------------------------" << std::endl;
 }
 
 void tev::batch_ten()
