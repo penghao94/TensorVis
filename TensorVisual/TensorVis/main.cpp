@@ -10,6 +10,7 @@
 #include "drawTensor.h"
 #include "printPNG.h"
 #include "batch_ten.h"
+#include "batch_print.h"
 #include <iostream>
 using namespace std;
 //init the viewer
@@ -45,8 +46,13 @@ int LAYER = 1;
 double ACCURACY = 0.5;
 int RADOM = 500;
 bool isAccuracy = true;
+
 int main(int argc, char *argv[])
 {
+	/*
+	the settings of viewer
+	*/
+	viewer.core.show_lines = false;
 	// Extend viewer menu
 	viewer.callback_init = [&](igl::viewer::Viewer& viewer)
 	{
@@ -172,6 +178,10 @@ int main(int argc, char *argv[])
 		viewer.ngui->addButton("Batch Tensor ", [&]() {
 			tev::batch_ten();
 		});
+		viewer.ngui->addButton("Batch Print ", [&]() {
+			tev::batch_print(viewer, V, F, S, T, SCALAR_MAX, AXIS, ACCURACY, RADOM, LAYER, isAccuracy);
+		});
+
 		// Generate menu
 		viewer.screen->performLayout();
 
