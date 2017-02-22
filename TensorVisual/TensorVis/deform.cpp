@@ -110,7 +110,6 @@ bool tev::deform(Eigen::MatrixXd & V, Eigen::MatrixXd & Ten, Eigen::MatrixXd & V
 		}
 		Fs += VROW;
 	}
-	cout << "Tensor print done!" << endl;
 	Vs.resize(0, 0);
 	S.resize(0, 0);
 	R.resize(0, 0);
